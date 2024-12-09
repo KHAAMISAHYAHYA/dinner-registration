@@ -1,0 +1,11 @@
+<html>
+<body>
+  <h1>Thank you for registering!</h1>
+  <p>Your table number is: <span id="tableNumber"></span></p>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const tableNumber = urlParams.get('number');
+    document.getElementById('tableNumber').innerText = tableNumber;
+  </script>
+</body>
+</html>
