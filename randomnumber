@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+
+  <title>Table Number</title>
+  <style>
+    body {
+      font-family: 'Bubblegum Sans', cursive;
+      background-color: #f8e3c0;
+      color: #6d2c1b;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      border: 5px solid #6d2c1b;
+      padding: 30px;
+      margin: 50px auto;
+      background-color: #fff3e0;
+      width: 80%;
+      max-width: 500px;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+    #tableNumber {
+      font-size: 4em;
+      font-weight: bold;
+      color: #6d2c1b;
+      display: block;
+      margin: 20px 0;
+    }
+    .reminder {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>THANK YOU FOR REGISTERING!</h1>
+    <p>Your table number is:</p>
+    <span id="tableNumber"></span>
+    <p class="reminder">Remember this number to win your lucky draw!!</p>
+  </div>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const tableNumber = urlParams.get('number');
+    if (tableNumber) {
+      document.getElementById('tableNumber').innerText = tableNumber;
+    }
+  </script>
+</body>
+</html>
