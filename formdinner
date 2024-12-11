@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lucky Draw Submission</title>
+  <style>
+    /* Add your styles here */
+  </style>
+</head>
+<body>
+  <h1>Lucky Draw Registration</h1>
+  <form id="registrationForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <label for="department">Department:</label>
+    <input type="text" id="department" name="department" required>
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" name="phone" required>
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="status"></div>
+  <div id="luckyDrawInfo"></div>
+
+  <script>
+    // Handle form submission
+    document.getElementById("registrationForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      // Get form data
+      const name = document.getElementById("name").value;
+      const department = document.getElementById("department").value;
+      const phone = document.getElementById("phone").value;
+
+      // Send POST request to submit data
+      const postData = new URLSearchParams();
+      postData.append("name", name);
+      postData.append("department", department);
+      postData.append("phone", phone);
+
+      fetch('https://script.google.com/macros/s/AKfycbwVYlJfQyBjOR1Gj7ZBuAtmt59A9b5wDEDFvcbCJzYy/dev', {
+        method: 'POST',
+        body: postData
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("status").innerText = "Data submitted successfully!";
+        searchLuckyDrawInfo(name); // After submission, fetch lucky draw info
+      })
+      .catch(error => {
+        document.getElementById("status").innerText = "Error submitting data.";
+      });
+    });
+
+    // Search for lucky draw info by name
+    function searchLuckyDrawInfo(name) {
+      const url = new URL('https://script.google.com/macros/s/AKfycbwVYlJfQyBjOR1Gj7ZBuAtmt59A9b5wDEDFvcbCJzYy/exec');
+      url.searchParams.append('name', name);
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("luckyDrawInfo").innerHTML = `
+            Lucky Draw Number: ${data.luckyDrawNumber}<br>
+            Table Number: ${data.tableNumber}
+          `;
+        })
+        .catch(error => {
+          document.getElementById("luckyDrawInfo").innerText = "Error retrieving lucky draw info.";
+        });
+    }
+  </script>
+</body>
+</html>
