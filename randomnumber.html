@@ -54,20 +54,24 @@
 <body>
   <div class="container">
     <h1>THANK YOU FOR PARTICIPATING!</h1>
-    <p>Your lucky draw number is:</p>
+    <p>Your lucky draw number is: <span id="tableNumber">...</span></p>
     <span id="luckyNumber">...</span>
     <p class="reminder">Good luck and stay tuned for the results!</p>
   </div>
   <script>
-    // Get the lucky draw number from the URL query parameter
+    // Step 1: Get the lucky draw number and table number from the URL query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const luckyNumber = urlParams.get('number');
-
-    // Display the lucky draw number dynamically
-    if (luckyNumber) {
+    const tableNumber = urlParams.get('table');
+    
+    // Step 2: Display the lucky draw number and table number on the page
+    if (luckyNumber && tableNumber) {
       document.getElementById('luckyNumber').innerText = luckyNumber;
+      document.getElementById('tableNumber').innerText = tableNumber;
     } else {
+      // Fallback if no lucky number or table number is found
       document.getElementById('luckyNumber').innerText = 'Not Available';
+      document.getElementById('tableNumber').innerText = 'Not Available';
     }
   </script>
 </body>
