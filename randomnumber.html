@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap" rel="stylesheet">
 
-  <title>Table Number</title>
+  <title>Lucky Draw Number</title>
   <style>
     body {
       font-family: 'DynaPuff', sans-serif;
@@ -34,9 +34,9 @@
     p {
       font-size: 1.5em;
       margin: 10px 0;
-      color: #f9c000; /* Yellow for the text */
+      color: #f9c000; 
     }
-    #tableNumber {
+    #luckyNumber {
       font-size: 4em;
       font-weight: bold;
       color: #f9c000; 
@@ -53,16 +53,21 @@
 </head>
 <body>
   <div class="container">
-    <h1>THANK YOU FOR REGISTERING!</h1>
-    <p>Your table number is:</p>
-    <span id="tableNumber"></span>
-    <p class="reminder">Remember this number to win your lucky draw!!</p>
+    <h1>THANK YOU FOR PARTICIPATING!</h1>
+    <p>Your lucky draw number is:</p>
+    <span id="luckyNumber">...</span>
+    <p class="reminder">Good luck and stay tuned for the results!</p>
   </div>
   <script>
+    // Get the lucky draw number from the URL query parameter
     const urlParams = new URLSearchParams(window.location.search);
-    const tableNumber = urlParams.get('number');
-    if (tableNumber) {
-      document.getElementById('tableNumber').innerText = tableNumber;
+    const luckyNumber = urlParams.get('number');
+
+    // Display the lucky draw number dynamically
+    if (luckyNumber) {
+      document.getElementById('luckyNumber').innerText = luckyNumber;
+    } else {
+      document.getElementById('luckyNumber').innerText = 'Not Available';
     }
   </script>
 </body>
