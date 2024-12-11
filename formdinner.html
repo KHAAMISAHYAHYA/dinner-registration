@@ -1,75 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lucky Draw Submission</title>
-  <style>
-    /* Add your styles here */
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bollywood Fan Club</title>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap');
+ 
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+ 
+        .container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom right, #ff6b6b, #feca57, #ff9ff3);
+        }
+ 
+        .form-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            max-width: 24rem;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+ 
+        .film-reel {
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 100px;
+            height: 100px;
+            border: 15px dashed rgba(0,0,0,0.1);
+            border-radius: 50%;
+            animation: spin 20s linear infinite;
+        }
+ 
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: twinkle 5s ease-in-out infinite alternate;
+        }
+ 
+        h1 {
+            font-family: 'Baloo 2', cursive;
+            font-size: 2.25rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #e67e22;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+ 
+        form {
+            position: relative;
+            z-index: 10;
+        }
+ 
+        .form-group {
+            margin-bottom: 1rem;
+        }
+ 
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+        }
+ 
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+        }
+ 
+        button {
+            width: 100%;
+            background-color: #f39c12;
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 9999px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+ 
+        button:hover {
+            background-color: #e67e22;
+            transform: scale(1.05);
+        }
+ 
+        button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0.3) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 100%
+            );
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+ 
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+ 
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+ 
+        @keyframes shine {
+            0% { left: -50%; top: -50%; }
+            100% { left: 150%; top: 150%; }
+        }
+</style>
 </head>
 <body>
-  <h1>Dinner Registration</h1>
-  <form id="registrationForm">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
-    <label for="department">Department:</label>
-    <input type="text" id="department" name="department" required>
-    <label for="phone">Phone:</label>
-    <input type="text" id="phone" name="phone" required>
-    <button type="submit">Submit</button>
-  </form>
-
-  <div id="status"></div>
-  <div id="luckyDrawInfo"></div>
-
-  <script>
-    // Handle form submission
-    document.getElementById("registrationForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      // Get form data
-      const name = document.getElementById("name").value;
-      const department = document.getElementById("department").value;
-      const phone = document.getElementById("phone").value;
-
-      // Send POST request to submit data
-      const postData = new URLSearchParams();
-      postData.append("name", name);
-      postData.append("department", department);
-      postData.append("phone", phone);
-
-      fetch('https://script.google.com/macros/s/AKfycbwVYlJfQyBjOR1Gj7ZBuAtmt59A9b5wDEDFvcbCJzYy/dev', {
-        method: 'POST',
-        body: postData
-      })
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("status").innerText = "Data submitted successfully!";
-        searchLuckyDrawInfo(name); // After submission, fetch lucky draw info
-      })
-      .catch(error => {
-        document.getElementById("status").innerText = "Error submitting data.";
-      });
-    });
-
-    // Search for lucky draw info by name
-    function searchLuckyDrawInfo(name) {
-      const url = new URL('https://script.google.com/macros/s/AKfycbwVYlJfQyBjOR1Gj7ZBuAtmt59A9b5wDEDFvcbCJzYy/exec');
-      url.searchParams.append('name', name);
-
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById("luckyDrawInfo").innerHTML = `
-            Lucky Draw Number: ${data.luckyDrawNumber}<br>
-            Table Number: ${data.tableNumber}
-          `;
-        })
-        .catch(error => {
-          document.getElementById("luckyDrawInfo").innerText = "Error retrieving lucky draw info.";
+<div class="container">
+<div class="form-container">
+<div class="film-reel"></div>
+<div class="stars"></div>
+<h1>BFA Bollywood Attendance</h1>
+<form id="bollywoodForm">
+<div class="form-group">
+<label for="name">Name</label>
+<input type="text" id="name" name="name" placeholder="Your Bollywood Name" required>
+</div>
+<div class="form-group">
+<label for="department">Department</label>
+<select id="department" name="department" required>
+<option value="">Select Department</option>
+<option value="HR">Human Resources</option>
+<option value="Technical Services">Technical Services</option>
+<option value="Finera">Finera</option>
+<option value="IT & Technical Data">IT & Technical Data</option>
+<option value="Finance">Finance</option>
+</select>
+</div>
+<div class="form-group">
+<label for="phoneNumber">Phone Number</label>
+<input type="text" id="phoneNumber" name="phoneNumber" placeholder="Your Phone Number" required>
+</div>
+<button type="submit">Join the Club!</button>
+</form>
+ 
+            <h1>Your Lucky Draw Number:</h1>
+<p id="result"></p>
+            //<p id="status"></p>
+</div>
+</div>
+ 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            async function submitName(event) {
+                event.preventDefault();
+ 
+                // Get the input values
+                const name = document.getElementById("name").value;
+                const department = document.getElementById("department").value;
+                const phoneNumber = document.getElementById("phoneNumber").value;
+ 
+                if (!name || !department || !phoneNumber) {
+                    alert("Please fill in all fields.");
+                    return;
+                }
+ 
+                // Define the URL of your Google Apps Script
+                const url = https://script.google.com/macros/s/AKfycbx8hSGiKw45y_x3xD0uR18q8uFMtcLccqy2FKtH7PeXnlpKqVJPNrQbwc-xSzIZvUVIHA/exec?name=${encodeURIComponent(name)}&department=${encodeURIComponent(department)}&phoneNumber=${encodeURIComponent(phoneNumber)};
+ 
+                try {
+                    // Fetch data from the Google Apps Script URL
+                    const response = await fetch(url);
+                    const data = await response.json();
+ 
+                    // Ensure elements exist before setting text content
+                    const resultElement = document.getElementById("result");
+                    const statusElement = document.getElementById("status");
+ 
+                    if (data.columnA) {
+                        // Display the value of columnA from the response
+                        resultElement.textContent = Lucky Draw: ${data.columnA};
+                        statusElement.textContent = Status: ${data.columnE};
+                    } else {
+                        // Handle the case where name is not found
+                        resultElement.textContent = "Name not found.";
+                        statusElement.textContent = "";
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("There was an error with the request.");
+                }
+            }
+ 
+            // Add the submit event listener to the form
+            document.getElementById('bollywoodForm').addEventListener('submit', submitName);
         });
-    }
-  </script>
+</script>
 </body>
 </html>
