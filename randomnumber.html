@@ -1,78 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap" rel="stylesheet">
-
-  <title>Lucky Draw Number</title>
-  <style>
-    body {
-      font-family: 'DynaPuff', sans-serif;
-      background: linear-gradient(135deg, #5f2487, #9b4d9e); 
-      color: #f9c000; 
-      text-align: center;
-      padding: 20px;
-    }
-    .container {
-      border: 5px solid #f9c000; 
-      padding: 30px;
-      margin: 50px auto;
-      background-color: #b36b6b; 
-      width: 80%;
-      max-width: 500px;
-      border-radius: 15px; 
-    }
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      color: #f9c000; 
-    }
-    p {
-      font-size: 1.5em;
-      margin: 10px 0;
-      color: #f9c000; 
-    }
-    #luckyNumber {
-      font-size: 4em;
-      font-weight: bold;
-      color: #f9c000; 
-      display: block;
-      margin: 20px 0;
-    }
-    .reminder {
-      font-size: 1.5em;
-      font-weight: bold;
-      margin-top: 20px;
-      color: #f9c000; 
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucky Draw Number</title>
+<style>
+    /* Your existing styles */
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>THANK YOU FOR PARTICIPATING!</h1>
-    <p>Your lucky draw number is: <span id="tableNumber">...</span></p>
-    <span id="luckyNumber">...</span>
-    <p class="reminder">Good luck and stay tuned for the results!</p>
-  </div>
+<div class="container">
+<h1>THANK YOU FOR PARTICIPATING!</h1>
+<p>Your table number is: <span id="tableNumber">...</span></p>
+<span id="luckyNumber">...</span>
+<!-- Search form -->
+<div>
+<h2>Search for Name</h2>
+<input type="text" id="searchName" placeholder="Enter name to search">
+<button onclick="searchName()">Submit</button>
+</div>
+ 
+    <p id="result"></p>
+<p class="reminder">Good luck and stay tuned for the results!</p>
+</div>
+ 
   <script>
     // Step 1: Get the lucky draw number and table number from the URL query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const luckyNumber = urlParams.get('number');
     const tableNumber = urlParams.get('table');
-    
-    // Step 2: Display the lucky draw number and table number on the page
     if (luckyNumber && tableNumber) {
       document.getElementById('luckyNumber').innerText = luckyNumber;
       document.getElementById('tableNumber').innerText = tableNumber;
     } else {
-      // Fallback if no lucky number or table number is found
       document.getElementById('luckyNumber').innerText = 'Not Available';
       document.getElementById('tableNumber').innerText = 'Not Available';
     }
-  </script>
+ 
+    // Step 2: Function to search for the name
+    function searchName() {
+      const name = document.getElementById('searchName').value;
+      if (name) {
+        fetch(`https://script.google.com/macros/s/AKfycbysLgDOzc_Npl_iS4D1bRzZ6cYeFsrkwYHA58O5X-RmvuEdEW3Q9YWMStEot_9YPs-AMQ/exec?name=${name}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.found) {
+              document.getElementById('result').innerText = `Found: ${data.name} at row ${data.row}`;
+            } else {
+              document.getElementById('result').innerText = 'Name not found';
+            }
+          })
+          .catch(error => {
+            document.getElementById('result').innerText = 'Error: ' + error;
+          });
+      } else {
+        document.getElementById('result').innerText = 'Please enter a name to search';
+      }
+    }
+</script>
 </body>
 </html>
+
+has context menu
