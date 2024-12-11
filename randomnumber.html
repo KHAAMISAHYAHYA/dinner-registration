@@ -11,16 +11,25 @@
 <body>
 <div class="container">
 <h1>THANK YOU FOR PARTICIPATING!</h1>
-<p>Your table number is: <span id="tableNumber">...</span></p>
+<p>Your lucky draw number is: <span id="tableNumber">...</span></p>
 <span id="luckyNumber">...</span>
-<!-- Search form -->
+ 
+    <!-- Search form -->
 <div>
 <h2>Search for Name</h2>
 <input type="text" id="searchName" placeholder="Enter name to search">
-<button onclick="searchName()">Submit</button>
+<button onclick="searchName()">Search</button>
 </div>
  
     <p id="result"></p>
+<!-- New Data Submission Form -->
+<div>
+<h2>Submit Your Details</h2>
+<input type="text" id="name" placeholder="Enter your name">
+<input type="text" id="department" placeholder="Enter your department">
+<input type="text" id="phone" placeholder="Enter your phone number">
+<button onclick="submitData()">Submit</button>
+</div>
 <p class="reminder">Good luck and stay tuned for the results!</p>
 </div>
  
@@ -45,7 +54,7 @@
           .then(response => response.json())
           .then(data => {
             if (data.found) {
-              document.getElementById('result').innerText = `Found: ${data.name} at row ${data.row}`;
+              document.getElementById('result').innerText = `Found: ${data.name}, Lucky Draw Number: ${data.luckyDrawNumber}`;
             } else {
               document.getElementById('result').innerText = 'Name not found';
             }
@@ -57,8 +66,37 @@
         document.getElementById('result').innerText = 'Please enter a name to search';
       }
     }
+ 
+    // Step 3: Function to submit new data (name, department, phone)
+    function submitData() {
+      const name = document.getElementById('name').value;
+      const department = document.getElementById('department').value;
+      const phone = document.getElementById('phone').value;
+ 
+      if (name && department && phone) {
+        fetch('https://script.google.com/macros/s/AKfycbxEpAU8ebM9ak7y1vGmaeh_1Dx4v4DWj9Iiha7vAKJWwr0W7JPmif6B8aYE_wbpnmBEMg/exec', {
+          method: 'POST',
+          body: new URLSearchParams({
+            name: name,
+            department: department,
+            phone: phone
+          })
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert('Your details have been submitted successfully!');
+            } else {
+              alert('Error: ' + data.error);
+            }
+          })
+          .catch(error => {
+            alert('Error: ' + error);
+          });
+      } else {
+        alert('Please fill out all fields');
+      }
+    }
 </script>
 </body>
 </html>
-
-has context menu
